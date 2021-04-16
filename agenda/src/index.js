@@ -8,6 +8,7 @@ const App = () => {
     const [persona, setPersona] = useState([
       { nombre: "Arto Hellas", numero: "040-1234567" },
     ]);
+    const [filtro, setFiltro] = useState("");
 
     const Guardar=(event)=>{
         event.preventDefault()
@@ -45,10 +46,29 @@ const App = () => {
       setNuevoNumero(event.target.value);
     };
 
+    let filtroPersona = persona;
+
+      if (filtro.length > 0) {
+        filtroPersona = persona.filter((person) => {
+          return person.nombre.toUpperCase().includes(filtro);
+        });
+      }
+
+      const Buscar = (event) => {
+        setFiltro(event.target.value.toUpperCase());
+      };
+
     return (
       <div>
         <h2>Phonebook</h2>
         <form>
+        <div>
+          filter shown with:{" "}
+          <input type="text" onChange={Buscar} value={filtro} />
+        </div>
+        <hr />
+        <h2>add a new</h2>
+
           <div>
             name: <input type="text" onChange={Agregar} value={nuevonom} />
           </div>
@@ -61,9 +81,11 @@ const App = () => {
         </form>
         <h2>Numbers</h2>
         <ul>
-          {persona.map((person, index) => {
-            const { nombre, numero } = person;
-            return <li key={nombre}>{nombre} {numero}</li>;
+        {filtroPersona.map((person, index) => {
+          const {nombre, numero} = person
+          return (
+            <li key={nombre}> {nombre} {numero}</li>
+          );
           })}
         </ul>
       </div>

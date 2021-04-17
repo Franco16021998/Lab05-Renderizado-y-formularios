@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
 import React, { useState } from "react"
-
+import Filtro from "./Components/Filtro";
+import Formulario from "./Components/Formulario";
+import Persona from "./Components/Persona";
 const App = () => {
     
     const [ nuevonom, setNuevoNombre ] = useState('')
@@ -61,33 +63,18 @@ const App = () => {
     return (
       <div>
         <h2>Phonebook</h2>
-        <form>
-        <div>
-          filter shown with:{" "}
-          <input type="text" onChange={Buscar} value={filtro} />
-        </div>
-        <hr />
-        <h2>add a new</h2>
-
-          <div>
-            name: <input type="text" onChange={Agregar} value={nuevonom} />
-          </div>
-          <div>
-            number:<input type="text" onChange={Agregarnum} value={nuevonum} />
-        </div>
-          <div>
-            <button onClick={Guardar}>add</button>
-          </div>
-        </form>
+        <Filtro filtro={filtro} Buscar={Buscar} />
+          <h2>Numbers</h2>
+          <h2>add a new</h2>
+          <Formulario
+            nombre={nuevonom}
+            numero={nuevonum}
+            Agregar={Agregar}
+            Agregarnum={Agregarnum}
+            Guardar={Guardar}
+          />
         <h2>Numbers</h2>
-        <ul>
-        {filtroPersona.map((person, index) => {
-          const {nombre, numero} = person
-          return (
-            <li key={nombre}> {nombre} {numero}</li>
-          );
-          })}
-        </ul>
+        <Persona data={filtroPersona} />
       </div>
     );
   };
